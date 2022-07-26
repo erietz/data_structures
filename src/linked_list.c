@@ -37,10 +37,11 @@ linkedListRemove(struct node *head, char *data)
 {
 	struct node *curr = head;
 
-	if (curr->next == NULL) {
+	if (strcmp(curr->data, data) == 0) {
+		struct node *tmp = curr->next;
 		curr->data = NULL;
 		free(curr);
-		return NULL;
+		return tmp;
 	}
 
 	while (curr->next != NULL) {

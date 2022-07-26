@@ -9,11 +9,11 @@ testLinkedList() {
 	linkedListPrint(list);
 	linkedListAdd(list, "item 3");
 	linkedListPrint(list);
+	list = linkedListRemove(list, "item 1");
+	linkedListPrint(list);
 	list = linkedListRemove(list, "item 3");
 	linkedListPrint(list);
 	list = linkedListRemove(list, "item 2");
-	linkedListPrint(list);
-	list = linkedListRemove(list, "item 1");
 	linkedListPrint(list);
 }
 
