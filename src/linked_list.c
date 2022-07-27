@@ -11,18 +11,17 @@ createNode(char *data)
 	struct Node *newNode = malloc(sizeof(struct Node));
 	char *newData = malloc(strlen(data) + 1);
 	strcpy(newData, data);
-	newNode->data = data;
+	newNode->data = newData;
 	newNode->next = NULL;
 	return newNode;
 }
 
 struct List*
-ll_init(char *data)
+ll_init()
 {
-	struct Node *node = createNode(data);
 	struct List *list = malloc(sizeof(struct List));
-	list->head = node;
-	list->length = 1;
+	list->head = NULL;
+	list->length = 0;
 	return list;
 }
 
@@ -30,10 +29,16 @@ void
 ll_add(struct List *list, char *data)
 {
 	struct Node *curr;
-	for (curr = list->head; curr->next; curr = curr->next);
 	struct Node *node = createNode(data);
-	curr->next = node;
 	list->length++;
+
+	if (list->head == NULL) {
+		list->head = node;
+		return;
+	}
+
+	for (curr = list->head; curr->next; curr = curr->next);
+	curr->next = node;
 }
 
 struct List*

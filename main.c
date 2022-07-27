@@ -10,7 +10,8 @@ printLinkedListLength(struct List *list)
 void
 testLinkedList()
 {
-	struct List *list = ll_init("item 1");
+	struct List *list = ll_init();
+	ll_add(list, "item 1");
 	printLinkedListLength(list);
 	ll_print(list);
 	ll_add(list, "item 2");
@@ -38,8 +39,23 @@ testLinkedList()
 	ll_print(list);
 }
 
+struct List*
+readFile()
+{
+	struct List *list = ll_init("");
+	FILE *fd = fopen("/home/ethan/Documents/bio.md", "r");
+	char buff[255];
+	while (fgets(buff, sizeof buff, fd)) {
+		ll_add(list, buff);
+	}
+	fclose(fd);
+	return list;
+}
+
 int
 main()
 {
 	testLinkedList();
+	struct List *list = readFile();
+	/* ll_print(list); */
 }
