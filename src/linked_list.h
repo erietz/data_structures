@@ -3,16 +3,20 @@
 
 #include <stdbool.h>
 
-struct node {
-	struct node *next;
+struct Node {
+	struct Node *next;
 	char *data;
 };
 
-struct node *linkedListInit();
-void linkedListAdd(struct node *head, char *data);
-struct node *linkedListRemove(struct node *head, char *data);
-bool linkedListContains(struct node *head, char *data);
-int linkedListLength(struct node *head);
-void linkedListPrint(struct node *head);
+struct List {
+	struct Node *head;
+	int length;
+};
+
+struct List *ll_init();
+void ll_add(struct List *list, char *data);
+struct List * ll_remove(struct List *list, char *data);
+bool ll_contains(struct List *list, char *data);
+void ll_print(struct List *list);
 
 #endif // LINKED_LIST_H

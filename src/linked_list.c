@@ -3,13 +3,12 @@
 #include <string.h>
 #include "linked_list.h"
 
-static struct node *createNode(char *data);
+static struct Node *createNode(char *data);
 
-
-struct node*
+struct Node*
 createNode(char *data)
 {
-	struct node *newNode = malloc(sizeof(struct node));
+	struct Node *newNode = malloc(sizeof(struct Node));
 	char *newData = malloc(strlen(data) + 1);
 	strcpy(newData, data);
 	newNode->data = data;
@@ -17,53 +16,71 @@ createNode(char *data)
 	return newNode;
 }
 
-struct node*
-linkedListInit(char *data)
+struct List*
+ll_init(char *data)
 {
-	return createNode(data);
+	struct Node *node = createNode(data);
+	struct List *list = malloc(sizeof(struct List));
+	list->head = node;
+	list->length = 1;
+	return list;
 }
 
 void
-linkedListAdd(struct node *head, char *data)
+ll_add(struct List *list, char *data)
 {
-	struct node *curr;
-	for (curr = head; curr->next; curr = curr->next);
-	struct node *newNode = createNode(data);
-	curr->next = newNode;
+	struct Node *curr;
+	for (curr = list->head; curr->next; curr = curr->next);
+	struct Node *node = createNode(data);
+	curr->next = node;
+	list->length++;
 }
 
-struct node*
-linkedListRemove(struct node *head, char *data)
+struct List*
+ll_remove(struct List *list, char *data)
 {
-	struct node *curr = head;
+	struct Node *curr = list->head;
+	list->length--;
 
 	if (strcmp(curr->data, data) == 0) {
-		struct node *tmp = curr->next;
+		list->head = curr->next;
 		curr->data = NULL;
 		free(curr);
-		return tmp;
+		return list;
 	}
 
 	while (curr->next != NULL) {
 		if (strcmp(curr->next->data, data) == 0) {
-			struct node* tmp = curr->next;
+			struct Node* tmp = curr->next;
 			curr->next = tmp->next;
 			tmp->data = NULL;
 			free(tmp);
-			return head;
+			return list;
 		}
 		curr = curr->next;
 	}
 	curr->next->data = NULL;
 	free(curr->next);
 	curr->next = NULL;
-	return head;
+	return list;
+}
+
+bool
+ll_contains(struct List *list, char *data)
+{
+	struct Node *curr = list->head;
+	while (curr != NULL) {
+		if (strcmp(curr->data, data) == 0)
+			return true;
+		curr = curr->next;
+	}
+	return false;
 }
 
 void
-linkedListPrint(struct node *head)
+ll_print(struct List *list)
 {
-	struct node *curr = head;
+	struct Node *curr = list->head;
 	if (!curr) {
 		puts("[ (null) ]");
 		return;
