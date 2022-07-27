@@ -82,7 +82,7 @@ ll_print(struct List *list)
 {
 	struct Node *curr = list->head;
 	if (!curr) {
-		puts("[ (null) ]");
+		puts("[ ]");
 		return;
 	}
 
