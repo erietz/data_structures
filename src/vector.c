@@ -20,11 +20,9 @@ vector resize(struct vector vec) {
 	if (vec.len == vec.cap) {
 		vec.cap *= 2;
 		vec.arr = realloc(vec.arr, vec.cap);
-		puts("realloc expanding");
 	} else if (vec.len < vec.cap / 4 && vec.len > 10) {
 		vec.cap /= 2;
 		vec.arr = realloc(vec.arr, vec.cap);
-		puts("realloc shrinking");
 	}
 	return vec;
 }

@@ -75,6 +75,12 @@ void testVector() {
 	vector s = slice(vec, 2, 5);
 	str = toString(s);
 	printf("vec = %s\n", str);
+
+	s.arr[1] = 92342;
+	str = toString(vec);
+	printf("vec = %s\n", str);
+	str = toString(s);
+	printf("vec = %s\n", str);
 }
 
 int main() {
