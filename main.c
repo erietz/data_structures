@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "src/linked_list.h"
+#include "src/vector.h"
 
 void
 printLinkedListLength(struct List *list)
@@ -52,10 +54,38 @@ readFile()
 	return list;
 }
 
-int
-main()
-{
-	testLinkedList();
-	struct List *list = readFile();
+void printVector(vector vec) {
+	for (int i = 0; i < vec.len; i++) {
+		printf("%d ", vec.arr[i]);
+	}
+}
+
+
+void testVector() {
+	vector vec = make(5);
+	vec = append(vec, 12);
+	vec = append(vec, 13);
+	vec = append(vec, 14);
+	vec = append(vec, 15);
+	vec = append(vec, 16);
+	vec = append(vec, 17);
+	/* printVector(vec); */
+
+	char* str = toString(vec);
+	printf("vec = %s\n", str);
+
+	vec = pop(vec);
+	vec = pop(vec);
+	vec = pop(vec);
+	vec = pop(vec);
+	str = toString(vec);
+	printf("vec = %s\n", str);
+}
+
+int main() {
+	/* testLinkedList(); */
+	/* struct List *list = readFile(); */
 	/* ll_print(list); */
+
+	testVector();
 }
