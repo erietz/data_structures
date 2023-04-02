@@ -20,9 +20,11 @@ vector resize(struct vector vec) {
 	if (vec.len == vec.cap) {
 		vec.cap *= 2;
 		vec.arr = realloc(vec.arr, vec.cap);
-	} else if (vec.len < vec.cap / 4) {
+		puts("realloc expanding");
+	} else if (vec.len < vec.cap / 4 && vec.len > 10) {
 		vec.cap /= 2;
 		vec.arr = realloc(vec.arr, vec.cap);
+		puts("realloc shrinking");
 	}
 	return vec;
 }
@@ -41,8 +43,18 @@ vector pop(struct vector vec) {
 	return vec;
 }
 
+vector slice(struct vector vec, int low, int high) {
+	assert(low >= 0);
+	high = high > vec.len ? vec.len : high;
+	int len = high - low;
+	vec.arr = &vec.arr[low];
+	vec.len = len;
+	resize(vec);
+	return vec;
+}
+
 char* toString(struct vector vec) {
-	char* str = malloc((2 * vec.len + 1)*sizeof(char) + 4*sizeof(char));
+	char* str = malloc((2 * vec.len)*sizeof(int) + 4*sizeof(int));
 
 	int i = 0;
 	str[i++] = '{';

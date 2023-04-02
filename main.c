@@ -3,15 +3,11 @@
 #include "src/linked_list.h"
 #include "src/vector.h"
 
-void
-printLinkedListLength(struct List *list)
-{
+void printLinkedListLength(struct List *list) {
 	printf("Linked list length %d\n", list->length);
 }
 
-void
-testLinkedList()
-{
+void testLinkedList() {
 	struct List *list = ll_init();
 	ll_add(list, "item 1");
 	printLinkedListLength(list);
@@ -41,9 +37,7 @@ testLinkedList()
 	ll_print(list);
 }
 
-struct List*
-readFile()
-{
+struct List* readFile() {
 	struct List *list = ll_init("");
 	FILE *fd = fopen("/home/ethan/Documents/bio.md", "r");
 	char buff[255];
@@ -69,16 +63,17 @@ void testVector() {
 	vec = append(vec, 15);
 	vec = append(vec, 16);
 	vec = append(vec, 17);
-	/* printVector(vec); */
+	vec = append(vec, 18);
 
 	char* str = toString(vec);
 	printf("vec = %s\n", str);
 
 	vec = pop(vec);
-	vec = pop(vec);
-	vec = pop(vec);
-	vec = pop(vec);
 	str = toString(vec);
+	printf("vec = %s\n", str);
+
+	vector s = slice(vec, 2, 5);
+	str = toString(s);
 	printf("vec = %s\n", str);
 }
 
