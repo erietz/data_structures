@@ -1,12 +1,24 @@
+enum VectorDataType {
+	INT_ARR,
+	DOUBLE_ARR,
+	CHAR_ARR,
+};
 
-typedef struct vector {
+union VectorData {
+	int* intArr;
+	double* doubleArr;
+	char* charArr;
+};
+
+typedef struct Vector {
 	int len;
 	int cap;
-	int* arr;
+	union VectorData arr;
+	enum VectorDataType type;
 } vector;
 
-vector make(int capacity);
-vector append(struct vector vec, int val);
-vector pop(struct vector vec);
-vector slice(struct vector vec, int low, int high);
-char* toString(struct vector vec);
+vector make(enum VectorDataType type, int capacity);
+vector append(struct Vector vec, enum VectorDataType val);
+vector pop(struct Vector vec);
+vector slice(struct Vector vec, int low, int high);
+char* toString(struct Vector vec);

@@ -50,13 +50,13 @@ struct List* readFile() {
 
 void printVector(vector vec) {
 	for (int i = 0; i < vec.len; i++) {
-		printf("%d ", vec.arr[i]);
+		printf("%d ", vec.arr.intArr[i]);
 	}
 }
 
 
-void testVector() {
-	vector vec = make(5);
+void testVectorInts() {
+	vector vec = make(INT_ARR, 5);
 	vec = append(vec, 12);
 	vec = append(vec, 13);
 	vec = append(vec, 14);
@@ -76,11 +76,84 @@ void testVector() {
 	str = toString(s);
 	printf("vec = %s\n", str);
 
-	s.arr[1] = 92342;
+	s.arr.intArr[1] = 92342;
 	str = toString(vec);
 	printf("vec = %s\n", str);
 	str = toString(s);
 	printf("vec = %s\n", str);
+}
+
+
+void testVectorDoubles() {
+	vector vec = make(DOUBLE_ARR, 5);
+	vec = append(vec, 4321.2L);
+	vec = append(vec, 9.3L);
+	vec = append(vec, 2.4L);
+	vec = append(vec, 231.5L);
+	vec = append(vec, 8.6L);
+	vec = append(vec, 9.7L);
+	vec = append(vec, 5.8L);
+
+	printf("%lf\n", vec.arr.doubleArr[0]);
+	printf("%lf\n", vec.arr.doubleArr[1]);
+	printf("%lf\n", vec.arr.doubleArr[2]);
+	printf("%lf\n", vec.arr.doubleArr[3]);
+	printf("%lf\n", vec.arr.doubleArr[4]);
+	printf("%lf\n", vec.arr.doubleArr[5]);
+	printf("%lf\n", vec.arr.doubleArr[6]);
+	/* char* str = toString(vec); */
+	/* printf("vec = %s\n", str); */
+
+	/* vec = pop(vec); */
+	/* str = toString(vec); */
+	/* printf("vec = %s\n", str); */
+
+	/* vector s = slice(vec, 2, 5); */
+	/* str = toString(s); */
+	/* printf("vec = %s\n", str); */
+
+	/* s.arr.intArr[1] = 92342; */
+	/* str = toString(vec); */
+	/* printf("vec = %s\n", str); */
+	/* str = toString(s); */
+	/* printf("vec = %s\n", str); */
+}
+
+void testVectorChars() {
+	char* test[] = {" test1", "test2" };
+
+	vector vec = make(CHAR_ARR, 5);
+	vec = append(vec, test[0]);
+	vec = append(vec, "test2");
+	vec = append(vec, "test3");
+	vec = append(vec, "test4");
+	vec = append(vec, "test5");
+	vec = append(vec, "test6");
+	vec = append(vec, "test7");
+
+	printf("%s\n", vec.arr.charArr[0]);
+	printf("%s\n", vec.arr.charArr[1]);
+	printf("%s\n", vec.arr.charArr[2]);
+	printf("%s\n", vec.arr.charArr[3]);
+	printf("%s\n", vec.arr.charArr[4]);
+	printf("%s\n", vec.arr.charArr[5]);
+	printf("%s\n", vec.arr.charArr[6]);
+	/* char* str = toString(vec); */
+	/* printf("vec = %s\n", str); */
+
+	/* vec = pop(vec); */
+	/* str = toString(vec); */
+	/* printf("vec = %s\n", str); */
+
+	/* vector s = slice(vec, 2, 5); */
+	/* str = toString(s); */
+	/* printf("vec = %s\n", str); */
+
+	/* s.arr.intArr[1] = 92342; */
+	/* str = toString(vec); */
+	/* printf("vec = %s\n", str); */
+	/* str = toString(s); */
+	/* printf("vec = %s\n", str); */
 }
 
 int main() {
@@ -88,5 +161,7 @@ int main() {
 	/* struct List *list = readFile(); */
 	/* ll_print(list); */
 
-	testVector();
+	/* testVectorInts(); */
+	testVectorDoubles();
+	/* testVectorChars(); */
 }

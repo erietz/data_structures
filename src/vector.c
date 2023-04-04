@@ -6,52 +6,107 @@
 #include "vector.h"
 
 
-vector make(int capacity) {
-	int* arr = malloc(capacity);
+vector make(enum VectorDataType type, int capacity) {
 	vector vec = {
 		.len = 0,
 		.cap = capacity,
-		.arr = arr,
+		.type = type,
 	};
+
+	switch (type) {
+		case INT_ARR:
+			vec.arr.intArr = malloc(sizeof(int) * capacity);
+		break;
+		case DOUBLE_ARR:
+			vec.arr.doubleArr = malloc(sizeof(double) * capacity);
+		break;
+		case CHAR_ARR:
+			vec.arr.charArr = malloc(sizeof(char) * capacity);
+		break;
+		default:
+			fprintf(stderr, "Invalid datatype");
+			exit(1);
+		break;
+	}
+
 	return vec;
 }
 
-vector resize(struct vector vec) {
+vector resize(struct Vector vec) {
+	int needsResized = 0;
+
 	if (vec.len == vec.cap) {
 		vec.cap *= 2;
-		vec.arr = realloc(vec.arr, vec.cap);
+		needsResized = 1;
 	} else if (vec.len < vec.cap / 4 && vec.len > 10) {
 		vec.cap /= 2;
-		vec.arr = realloc(vec.arr, vec.cap);
+		needsResized = 1;
 	}
+
+	if (needsResized) {
+		switch (vec.type) {
+			case INT_ARR:
+				vec.arr.intArr = realloc(vec.arr.intArr, vec.cap * sizeof(int));
+			break;
+			case DOUBLE_ARR:
+				vec.arr.doubleArr = realloc(vec.arr.doubleArr, vec.cap * sizeof(double));
+			break;
+			case CHAR_ARR:
+				vec.arr.charArr = realloc(vec.arr.charArr, vec.cap * sizeof(char));
+			break;
+		}
+	}
+
 	return vec;
 }
 
-vector append(struct vector vec, int val) {
+vector append(struct Vector vec, enum VectorDataType val) {
 	vec = resize(vec);
-	vec.arr[vec.len] = val;
+	switch (vec.type) {
+		case INT_ARR:
+			vec.arr.intArr[vec.len] = val;
+		break;
+		case DOUBLE_ARR:
+			vec.arr.doubleArr[vec.len] = val;
+		break;
+		case CHAR_ARR:
+			vec.arr.charArr[vec.len] = val;
+		break;
+	}
 	vec.len++;
 	return vec;
 }
 
-vector pop(struct vector vec) {
+vector pop(struct Vector vec) {
 	assert(vec.len > 0);
 	vec.len--;
 	vec = resize(vec);
 	return vec;
 }
 
-vector slice(struct vector vec, int low, int high) {
+vector slice(struct Vector vec, int low, int high) {
 	assert(low >= 0);
 	high = high > vec.len ? vec.len : high;
 	int len = high - low;
-	vec.arr = &vec.arr[low];
+
+	switch (vec.type) {
+		case INT_ARR:
+			vec.arr.intArr = &vec.arr.intArr[low];
+		break;
+		case DOUBLE_ARR:
+			vec.arr.doubleArr = &vec.arr.doubleArr[low];
+		break;
+		case CHAR_ARR:
+			vec.arr.charArr = &vec.arr.charArr[low];
+		break;
+	}
+
 	vec.len = len;
 	resize(vec);
 	return vec;
 }
 
-char* toString(struct vector vec) {
+char* toString(struct Vector vec) {
 	char* str = malloc((2 * vec.len)*sizeof(int) + 4*sizeof(int));
 
 	int i = 0;
@@ -59,7 +114,7 @@ char* toString(struct vector vec) {
 	str[i++] = ' ';
 
 	for (int j = 0; j < vec.len; j++) {
-		int n = sprintf(str + i, "%d", vec.arr[j]);
+		int n = sprintf(str + i, "%d", vec.arr.intArr[j]);
 		i += n;
 		str[i++] = ' ';
 
