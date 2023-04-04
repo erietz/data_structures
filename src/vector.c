@@ -60,17 +60,17 @@ vector resize(struct Vector vec) {
 	return vec;
 }
 
-vector append(struct Vector vec, enum VectorDataType val) {
+vector append(struct Vector vec, void *val) {
 	vec = resize(vec);
 	switch (vec.type) {
 		case INT_ARR:
-			vec.arr.intArr[vec.len] = val;
+			vec.arr.intArr[vec.len] = *(int*)val;
 		break;
 		case DOUBLE_ARR:
-			vec.arr.doubleArr[vec.len] = val;
+			vec.arr.doubleArr[vec.len] = *(double*)val;
 		break;
 		case CHAR_ARR:
-			vec.arr.charArr[vec.len] = val;
+			strcpy(vec.arr.charArr[vec.len], *(char*)val);
 		break;
 	}
 	vec.len++;
@@ -115,6 +115,24 @@ char* toString(struct Vector vec) {
 
 	for (int j = 0; j < vec.len; j++) {
 		int n = sprintf(str + i, "%d", vec.arr.intArr[j]);
+		i += n;
+		str[i++] = ' ';
+
+	}
+
+	str[i++] = '}';
+	return str;
+}
+
+char* toStringDouble(struct Vector vec) {
+	char* str = malloc((2 * vec.len)*sizeof(double) + 4*sizeof(double));
+
+	int i = 0;
+	str[i++] = '{';
+	str[i++] = ' ';
+
+	for (int j = 0; j < vec.len; j++) {
+		int n = sprintf(str + i, "%lf", vec.arr.doubleArr[j]);
 		i += n;
 		str[i++] = ' ';
 

@@ -18,7 +18,8 @@ typedef struct Vector {
 } vector;
 
 vector make(enum VectorDataType type, int capacity);
-vector append(struct Vector vec, enum VectorDataType val);
+vector append(struct Vector vec, void *val);
 vector pop(struct Vector vec);
 vector slice(struct Vector vec, int low, int high);
 char* toString(struct Vector vec);
+char* toStringDouble(struct Vector vec);
